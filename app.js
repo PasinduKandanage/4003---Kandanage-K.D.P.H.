@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-
 const flights = [
   {
     id: '1',
@@ -37,8 +36,24 @@ const flights = [
   },
 ];
 
+function parseFlight(flight) {
+  return {
+    id: flight.id,
+    flightNumber: flight.flightNumber,
+    airline: flight.airline,
+    departureAirport: flight.departureAirport,
+    departureTime: flight.departureTime,
+    arrivalAirport: flight.arrivalAirport,
+    arrivalTime: flight.arrivalTime,
+    price: parseFloat(flight.price),
+    seatsAvailable: parseInt(flight.seatsAvailable),
+  };
+}
+
+const parsedFlights = flights.map(parseFlight);
+
 app.get('/flights', (req, res) => {
-  res.json(flights);
+  res.json(parsedFlights);
 });
 
 module.exports = app;
